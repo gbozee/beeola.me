@@ -1,6 +1,7 @@
 ---
 title: Context Switching
 date: "2019-02-22T16:05:56.281Z"
+draft: false
 ---
 
 As someone who works both frontend and backend web technologies, I always find my self in situations where for example, I need to implement a functionality on the backend while working on the frontend. Often times this is very painful not because the task to be done is difficult but mostly because my train of thought is mostly impacted. 
