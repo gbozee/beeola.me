@@ -1,6 +1,7 @@
 ---
 title: An Annoying Python Quirk
 date: "2019-02-25T16:05:56.281Z"
+spoiler: Gotchas when dealing with serializing escaped characters in python
 draft: false
 ---
 
