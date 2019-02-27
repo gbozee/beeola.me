@@ -1,6 +1,7 @@
 ---
 title: Transitioning to React Hooks
 date: "2019-02-27T16:05:56.281Z"
+spoiler: Revealing flaws in React Codebases with Hooks
 # draft: true
 ---
 
