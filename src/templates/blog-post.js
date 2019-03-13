@@ -25,9 +25,16 @@ class BlogPostTemplate extends React.Component {
       `https://beeola.me${enSlug}`
     )}`;
     let editUrl = "";
+    let { keywords = "" } = post.frontmatter;
+    keywords = keywords.split(",");
+
     return (
       <Layout location={this.props.location} title={siteTitle}>
-        <SEO title={post.frontmatter.title} description={post.excerpt} />
+        <SEO
+          title={post.frontmatter.title}
+          description={post.excerpt}
+          keywords={keywords}
+        />
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
@@ -104,6 +111,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        keywords
       }
     }
   }

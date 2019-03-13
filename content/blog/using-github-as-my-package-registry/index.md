@@ -2,6 +2,7 @@
 title: Using Github as my package registry
 date: "2019-02-27T16:05:56.281Z"
 draft: true
+keywords: github, pip, package-registry, git
 ---
 
 More often than not, I find myself working with libraries whose authors aren't actively maintaining anymore. And you can't blame them. They might have moved on to other things and the project doesn't interest them anymore. 
