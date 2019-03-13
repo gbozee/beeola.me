@@ -2,6 +2,7 @@
 title: The Quest for less-verbose Forms
 date: "2019-03-06"
 spoiler: Revealing flaws in React Codebases with Hooks
+keywords: react hooks, react, forms, formik, reactjs
 # draft: true
 ---
 
