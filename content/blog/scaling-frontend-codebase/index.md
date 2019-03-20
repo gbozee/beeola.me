@@ -51,7 +51,7 @@ Getting this library to be used as a dependency, in both the `marketing-pages` a
 
 > [Create React App]() is a zero-config approach to building [ReactJS]() applications. By default, the only way you can get a dependency into a react application, is by installing it from [npm](). This was what `main-app` was built with.
 
-Getting `main-app` to detect the UI library as a dependency could be achieved, but requires a lot of overhead. At development time, changes are often made to both UI Library as well as `main-app`, so near instant feedback was very essential.
+Getting `main-app` to detect `ui-lib` as a dependency could be achieved, but requires a lot of overhead. At development time, changes are often made to both UI Library as well as `main-app`, so near instant feedback was very essential.
 
 Using Yarn workspaces, all application packages i.e (`ui-lib`, `marketing-pages`, `main-app`) were automatically symlinked in the root `node_modules`. This means they can be referenced easily across packages. 
 
