@@ -188,7 +188,7 @@ Both `ui-lib` and `shared-lib` also needed to be git sub modules. Since [git rep
 }
 ```
 
-By ensuring using specific git tag instead of a particular branch, deployment becomes an explicit action. To get the latest changes from the `ui-lib` codebase, the git tag had to be bumped to a new version. This ensures experimenetation without having to worry about regressions or breaking changes  in both `marketing-pages` and `main-app` as a result of new commits introduced in either the `ui-lib` or the `shared-lib` codebases.
+By ensuring using specific git tag instead of a particular branch, **deployment becomes an explicit action**. To get the latest changes from the `ui-lib` codebase, **the git tag had to be bumped to a new version**. This ensures experimenetation without having to worry about regressions or breaking changes,  in both `marketing-pages` and `main-app`, as a result of new commits introduced in either the `ui-lib` or the `shared-lib` codebases.
 
 These changes were made directly on the `master` branch of both the `marketing app` as well as `main_app`. The `develop` branch for both `marketing-pages` and `main-app`, is what is then referenced by the root **mono repo** codebase housing all the submodules.
 
