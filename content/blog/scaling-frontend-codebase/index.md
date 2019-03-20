@@ -1,7 +1,7 @@
 ---
 title: Scaling Frontend codebase (without sacrificing DX).
 date: "2019-03-19"
-spoiler: Getting the best of a mono repo architecture with Git submodules
+spoiler: Getting the best of a mono repository architecture with Git submodules
 draft: false
 keywords: reactjs, next-js, git submodues, create react app, netlify, gitlab pipelines, docker, npm, codebase, frontend, dx, developer experience
 ---
@@ -11,7 +11,7 @@ keywords: reactjs, next-js, git submodues, create react app, netlify, gitlab pip
 Imagine a frontend codebase as a single repository consisting of 3 sub applications, 
 1. the marketing pages application built with [NextJS](https://nextjs.org/), 
 2. the UI library, which houses the design system used by all apps 
-3. the product/main app built with [Creact React App](https://facebook.github.io/create-react-app/).
+3. the product/main app built with [Create React App](https://facebook.github.io/create-react-app/).
 4. An internal shared library used accross applications. We would call this `shared-lib`
 
 [Yarn workspace](https://yarnpkg.com/lang/en/docs/workspaces/) was used in wiring up these applications, so that a single `yarn install` pulls all the necessary dependencies required by all the different applications and libraries. Each application is a [NodeJS]() package and has its own internal script commands for deployment.
@@ -157,22 +157,22 @@ module.exports = withFonts(
 ## The Production Build Problem:
 The above project setup makes it very easy to setup a development environment in a matter of minutes. The only command required, for setup, is `yarn install`.
 
-But when thinking about deploying to production, The following problems occured.
+But when thinking about deploying to production, The following problems occurred.
 
-1. Inconsitency in build during development and on production platforms like [Netlify](https://www.netlify.com/). 
+1. Inconsistency in build during development and on production platforms like [Netlify](https://www.netlify.com/). 
 
 2. The time to build all the apps took over 17 minutes. This made deploying small changes very painful and increased the time required to resolve bug fixes
 
-*An initial solution to the first problem was to use [Gitlab Piplines]() and build the applications in a Docker container. The resulting build, grouped by folders, was then commited to a deploy repo which is then picked up by [Netlify](https://www.netlify.com/).*
+*An initial solution to the first problem was to use [Gitlab Piplines]() and build the applications in a Docker container. The resulting build, grouped by folders, was then committed to a deploy repo which is then picked up by [Netlify](https://www.netlify.com/).*
 
 ## The solution.
 Irrespective of what solution was proposed, one thing was certain, it shouldn't affect the development setup process. The only command requred to setup after cloning the base repository was `yarn install`.
 
-The proposed solution was to get all sub applications as [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). This meant, each sub application was a [git]() repository and could be deployed in isolation. As problems occured in a particular application, it was immediately addressed in isolation and deployed. 
+The proposed solution was to get all sub applications as [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). This meant, each sub application was a [git]() repository and could be deployed in isolation. As problems occurs in a particular application, they are immediately addressed in isolation and deployed. 
 
 **But then both `marketing pages` app and `main-app` failed to build in isolation**
 
-The problem is interesting. In the case of `marketing-pages`, Both the `shared-lib` and `ui-lib` packages weren't linked anymore in the `node_modules`. This was what [Yarn Workspaces]() solved by default.
+The problem is interesting. In the case of `marketing-pages`, Both the `shared-lib` and `ui-lib` packages weren't linked anymore in the `node_modules`. This was what [Yarn Workspace]() solved by default.
 
 Both `ui-lib` and `shared-lib` also needed to be git sub modules. Since [git repository can be installed as dependencies](https://docs.npmjs.com/files/package.json#git-urls-as-dependencies), the `package.json` for `marketing-app`  was updated.
 
@@ -188,11 +188,11 @@ Both `ui-lib` and `shared-lib` also needed to be git sub modules. Since [git rep
 }
 ```
 
-By ensuring using specific git tag instead of a particular branch, **deployment becomes an explicit action**. To get the latest changes from the `ui-lib` codebase, **the git tag had to be bumped to a new version**. This ensures experimenetation without having to worry about regressions or breaking changes,  in both `marketing-pages` and `main-app`, as a result of new commits introduced in either the `ui-lib` or the `shared-lib` codebases.
+By ensuring using specific git tag instead of a particular branch, **deployment becomes an explicit action**. To get the latest changes from the `ui-lib` codebase, **the git tag had to be bumped to a new version**. This ensures experimentation without having to worry about regressions or breaking changes,  in both `marketing-pages` and `main-app`, as a result of new commits introduced in either the `ui-lib` or the `shared-lib` codebase.
 
 These changes were made directly on the `master` branch of both the `marketing app` as well as `main_app`. The `develop` branch for both `marketing-pages` and `main-app`, is what is then referenced by the root **mono repo** codebase housing all the submodules.
 
-An intemeditate branch `staging` for both `marketing-pages` and `main-app` is required, to get changes from the `develop` branch to the `master` branch, and also ensuring that the `dependencies` in the `master` branch never creep over to the `develop` branch and vice versa.
+An intermediate branch `staging` for both `marketing-pages` and `main-app` is required, to get changes from the `develop` branch to the `master` branch, and also ensuring that the `dependencies` in the `master` branch never creep over to the `develop` branch and vice versa.
 
 Also since, in the `master` branch that houses the `main-app`, Lookups to the actual location of jsx components needs to be updated in the  `config-overrides.js`
 
@@ -229,7 +229,7 @@ The `package.json` for the `main-app` codebase would take the following look for
     }
 }
 ```
-The reason for this is simple. In the `develop` branch, work would most likely happen in the root repository that houses the sub_modules. Since this repository has [Yarn Workspace]() handling all the dependencies, whatsoever was resolved is what is needed, hence the need to expicitly use  `*` for both the `ui-lib` as well as the `shared-lib`
+The reason for this is simple. In the `develop` branch, work would most likely happen in the root repository that houses the sub_modules. Since this repository has [Yarn Workspace]() handling all the dependencies, whatsoever was resolved is what is needed, hence the need to explicitly use  `*` for both the `ui-lib` as well as the `shared-lib`
 
 **repo/packages/main-app/package.json(master)**
 ```js
