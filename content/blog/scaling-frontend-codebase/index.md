@@ -1,7 +1,7 @@
 ---
 title: Scaling Frontend codebase (without sacrificing DX).
 date: "2019-03-19"
-spoiler: Getting the best of a mono repository architecture with Git submodules
+spoiler: Getting the Benefits of a Mono Repository codebase without actually using a Mono repository.
 draft: false
 keywords: reactjs, next-js, git submodues, create react app, netlify, gitlab pipelines, docker, npm, codebase, frontend, dx, developer experience
 ---
