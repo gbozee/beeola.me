@@ -39,3 +39,6 @@ I like this approach for many reasons
 One obvious disadvantage with this approach is the possibility of making multiple similar calls, especially when [GraphQL]() is used. But this can be solved with a little work, depending on how paranoid one might be about performance.
 
 Would love to hear more about anyone practicing this approach and what they think.
+
+![Image](./sample.png)
+<figcaption>Image Code </figcaption>
