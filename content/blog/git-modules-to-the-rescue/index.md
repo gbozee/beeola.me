@@ -49,7 +49,7 @@ These scripts are then aggregated in the root `package.json`
 The above project setup makes it very easy to setup a development environment in a matter of minutes. The only command required is `yarn install` and all dependencies are available.
 
 But when thinking about deploying to production, The following problems occured.
-1. Inconsitency in build during development and on production platform [Netlify](https://www.netlify.com/). The solution was to use [Gitlab Piplines]() and build the applications in a Docker container. The resulting build, grouped by folders, was then commited to a deploy repo which is then picked up by [Netlify](https://www.netlify.com/)
+1. Inconsistency in build during development and on production platform [Netlify](https://www.netlify.com/). The solution was to use [Gitlab Piplines]() and build the applications in a Docker container. The resulting build, grouped by folders, was then commited to a deploy repo which is then picked up by [Netlify](https://www.netlify.com/)
 
 2. The time to build all the apps took over 17 minutes. This made deploying small changes very painful and increased the time required to resolve bug fixes
 
@@ -58,11 +58,11 @@ The first problem was somewhat tolerable but the second was unacceptable. The ti
 ## The solution.
 Irrespective of what solution was proposed, one thing was certain, it shouldn't affect the development setup process. Cloning the base repository and running `yarn install` should still pull all the dependencies of the corresponding applications.
 
-The proposed solution was to get all sub applications as [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). This meant each sub application had its own git repository and could be deployed in isolation. As problems occured in a particular application, it was immediately addressed and deployed. No more intermediate Docker build step on [Gitlab Pipelines].
+The proposed solution was to get all sub applications as [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). This meant each sub application had its own git repository and could be deployed in isolation. As problems occurred in a particular application, it was immediately addressed and deployed. No more intermediate Docker build step on [Gitlab Pipelines].
 
 **But then both the marketing pages app and the product application failed to build in isolation**
 
-The problem was obvious. In the case of the [NextJS]() marketing application, the shared ui libary wasn't linked anymore in the `node_modules`. This was what [Yarn Workspaces]() solved by automatically running `yarn link` on all the **packages/sub_applications**. 
+The problem was obvious. In the case of the [NextJS]() marketing application, the shared ui library wasn't linked anymore in the `node_modules`. This was what [Yarn Workspaces]() solved by automatically running `yarn link` on all the **packages/sub_applications**. 
 
 The UI Libary needed to be deployed in its own git repository and since [it was possible to install a node package directly from any git repository](), the `package.json` file for the [NextJS]() codebase was updated to look like this
 
@@ -78,11 +78,11 @@ The UI Libary needed to be deployed in its own git repository and since [it was 
 }
 ```
 
-By ensuring that a specific git tag was used instead of a particular branch, deployment needed to be an explicit action. To get the latest changes from the `ui-lib` codebase, the git tag had to be bumped to a new version. This ensures more experimenetation without having to worry about regressions or breaking changes as a result of new commits in either the `ui-lib` or the `shared-lib` codebases.
+By ensuring that a specific git tag was used instead of a particular branch, deployment needed to be an explicit action. To get the latest changes from the `ui-lib` codebase, the git tag had to be bumped to a new version. This ensures more experimentation without having to worry about regressions or breaking changes as a result of new commits in either the `ui-lib` or the `shared-lib` codebase.
 
 These changes were made directly on the `master` branch of the `marketing app` codebase so that the `develop` branch remains similar to what it was and the **mono repo** codebase housing all the submodules references commit from the `develop` branches of all the attached sub_modules
 
-An intemeditate branch `staging` was created, to get the changes on the `develop` branch to the `master` branch, while also ensuring that the `dependencies` in the `master` branch never crept over to the `develop` branch and vice versa.
+An intermediate branch `staging` was created, to get the changes on the `develop` branch to the `master` branch, while also ensuring that the `dependencies` in the `master` branch never crept over to the `develop` branch and vice versa.
 
 ## The Result
 The following were benefits gotten as a result of the solution above.
