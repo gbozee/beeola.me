@@ -2,7 +2,7 @@
 title: Git submodules to the rescue (A deployment case study)
 date: "2019-03-19"
 spoiler: Getting the best of a mono repo architecture with Git submodules
-draft: false
+draft: true
 keywords: reactjs, next-js, git submodues, create react app, netlify, gitlab pipelines, docker, npm
 ---
 
